@@ -1,0 +1,6 @@
+#Tue Oct 25 18:03:54 CEST 2011
+eclipse.preferences.version=1
+encoding//src/main/java/eu/blky/log4j/BeepAppender.java=UTF-8
+encoding//src/main/java/eu/blky/log4j/Gdata/GICalcAppender.java=UTF-8
+encoding//src/main/java/eu/blky/log4j/GtalkAppender.java=UTF-8
+encoding//src/main/java/eu/blky/log4j/SMS/SMSAppender.java=UTF-8

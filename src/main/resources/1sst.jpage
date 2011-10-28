@@ -1,0 +1,2 @@
+ String env = System.getenv("MAPWD");
+ 
