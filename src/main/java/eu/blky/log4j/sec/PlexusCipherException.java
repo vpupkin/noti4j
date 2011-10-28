@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   PlexusCipherException.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 
 public class PlexusCipherException extends Exception

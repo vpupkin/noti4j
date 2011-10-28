@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   DefaultPlexusCipher.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 import java.io.PrintStream;
 import java.security.Provider;

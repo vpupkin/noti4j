@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   SecurityConfigurationXpp3Reader.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   PlexusCipher.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 
 // Referenced classes of package org.sonatype.plexus.components.cipher:

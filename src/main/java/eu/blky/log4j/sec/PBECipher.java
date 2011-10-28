@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   PBECipher.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 import java.security.*;
 import java.util.Random;

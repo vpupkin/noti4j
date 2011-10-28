@@ -1,7 +1,8 @@
 package eu.blky.log4j.SMS; 
-
-import org.apache.log4j.AppenderSkeleton;
+ 
 import org.apache.log4j.spi.LoggingEvent;  
+
+import eu.blky.log4j.AbstractActivableAppender;
 import eu.blky.log4j.SMS.SMSClient;
 import eu.blky.log4j.SMS.Sender;
 
@@ -17,8 +18,12 @@ import eu.blky.log4j.SMS.Sender;
  * 
  * Creation:  20.10.2011::11:33:04<br> 
  */
-public class SMSAppender extends AppenderSkeleton {  
+public class SMSAppender extends  AbstractActivableAppender {
 
+	@Override
+	protected String[] getBeanPropertyNames() {
+		return new String[]{"recipient","csca","databits", "parity", "baudRate", "flowControlOut","portName", "flowControlIn","stopbits" };
+	}
 	//csca
 	public  void setCsca(String csca) {
 		Sender.csca = csca;
@@ -88,6 +93,8 @@ public class SMSAppender extends AppenderSkeleton {
 			return false;
 			 
 		}
+
+
 	}
 
 

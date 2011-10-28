@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   Config.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 import java.io.Serializable;
 import java.util.ArrayList;

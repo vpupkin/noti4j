@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   SecUtil.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 import java.io.*;
 import java.net.MalformedURLException;

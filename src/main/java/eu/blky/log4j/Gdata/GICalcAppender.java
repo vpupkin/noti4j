@@ -1,21 +1,13 @@
 package eu.blky.log4j.Gdata;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+ 
+import java.io.IOException;  
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Properties;
+import java.util.GregorianCalendar; 
 import java.util.TimeZone;
-
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.helpers.OptionConverter;
-import org.apache.log4j.spi.LoggingEvent;
-
+  
+import org.apache.log4j.spi.LoggingEvent; 
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.DateTime;
 import com.google.gdata.data.PlainTextConstruct;
@@ -26,6 +18,9 @@ import com.google.gdata.data.extensions.Reminder;
 import com.google.gdata.data.extensions.When;
 import com.google.gdata.data.extensions.Reminder.Method;
 import com.google.gdata.util.ServiceException;
+
+import eu.blky.log4j.AbstractActivableAppender;
+ 
 
 /**
  * 
@@ -39,7 +34,7 @@ import com.google.gdata.util.ServiceException;
  * 
  *         Creation: 20.10.2011::11:33:04<br>
  */
-public class GICalcAppender extends AppenderSkeleton {
+public class GICalcAppender extends AbstractActivableAppender {
 	public static void setProxy(String proxyHost, String proxyPort)// , String
 																	// host, int
 																	// port
@@ -151,6 +146,11 @@ public class GICalcAppender extends AppenderSkeleton {
 			throws ServiceException, IOException {
 		return createEvent(service, eventTitle, eventContent, null, false, null);
 	}
+	
+	@Override
+	protected String[] getBeanPropertyNames() {
+		return new String[]{"userName","userPassword"};
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -249,130 +249,6 @@ public class GICalcAppender extends AppenderSkeleton {
 		else {
 		}
 	}
-	@Override
-	public void activateOptions() {
-		String uHome = System.getProperty("user.home");
-		String uDir = System.getProperty("user.dir");
-		System.out.println(uDir);
-		File iUserCfg = new File(uHome, ".l");
-		if (iUserCfg.exists()) {
-			Properties lProps = new Properties();
-			FileReader reader;
-			try {
-				reader = new FileReader(iUserCfg);
-				lProps.load(reader);
-				for (String key : keys) {
-					String keyToSub = this.get(key);
-					keyToSub = keyToSub.trim();
-					if (keyToSub.startsWith("${") && keyToSub.endsWith("}"))
-						keyToSub = keyToSub.substring(2, keyToSub.length() - 1);
-					String value = OptionConverter.findAndSubst(keyToSub,
-							lProps);
-					// iterate thru bean-props
-					if (value.startsWith("{") && value.endsWith("}")) {
-						// try to restore the value from keyChain
-						value = decryptPassword(value);
-					}
-					set(key, value);
-				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecDispatcherException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (PlexusCipherException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	   
 
-		}
-
-		System.out.println("asdasdasda");
-	}
-	private String decryptPassword(String value) throws SecDispatcherException,
-			PlexusCipherException {
-		// else if ( commandLine.hasOption( CLIManager.ENCRYPT_PASSWORD ) )
-		// {
-		// String passwd = commandLine.getOptionValue(
-		// CLIManager.ENCRYPT_PASSWORD );
-		//
-		// dispatcher = (DefaultSecDispatcher) embedder.lookup(
-		// SecDispatcher.ROLE );
-		// String configurationFile = dispatcher.getConfigurationFile();
-		// if ( configurationFile.startsWith( "~" ) )
-		// {
-		// configurationFile = System.getProperty( "user.home" ) +
-		// configurationFile.substring( 1 );
-		// }
-		// String file = System.getProperty(
-		// DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION, configurationFile
-		// );
-		// embedder.release( dispatcher );
-		//
-		// String master = null;
-		//
-		// SettingsSecurity sec = SecUtil.read( file, true );
-		// if ( sec != null )
-		// {
-		// master = sec.getMaster();
-		// }
-		//
-		// if ( master == null )
-		// {
-		// System.err.println(
-		// "Master password is not set in the setting security file" );
-		//
-		// return 1;
-		// }
-		//
-		// DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-		// String masterPasswd =
-		// cipher.decryptDecorated( master,
-		// DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION );
-		// System.out.println( cipher.encryptAndDecorate( passwd, masterPasswd )
-		// );
-		//
-		// return 0;
-		// }
-
-		String configurationFile = "master.xml";
-		if (configurationFile.startsWith("~")) {
-			configurationFile = System.getProperty("user.home")
-					+ configurationFile.substring(1);
-		}
-		//new File(".").getAbsolutePath()
-		String file = System.getProperty(
-				DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION,
-				configurationFile);
-		SettingsSecurity sec = SecUtil.read(file, true);
-		String master = null;
-		if (sec != null) {
-			master = sec.getMaster();
-		}
-		DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-		String masterPasswd = cipher.decryptDecorated(master,
-				DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION);
-		String pwdTmp = cipher.decrypt(value , masterPasswd);
-		return pwdTmp;
-	}
-	// TODO refactor to reflection-way
-	private String get(String key) {
-		String retval = null;
-		if ("userName".equals(key))
-			retval = getUserName();
-		if ("userPassword".equals(key))
-			retval = getUserPassword();
-		return retval;
-	}
-	// TODO refactor to reflection-way
-	private void set(String key, String value) {
-		if ("userName".equals(key))
-			setUserName(value);
-		if ("userPassword".equals(key))
-			setUserPassword(value);
-	}
 }

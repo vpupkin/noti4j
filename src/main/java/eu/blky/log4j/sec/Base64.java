@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   Base64.java
 
-package eu.blky.log4j.Gdata;
+package eu.blky.log4j.sec;
 
 
 public class Base64
