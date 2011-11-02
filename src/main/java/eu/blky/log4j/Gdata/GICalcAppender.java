@@ -149,7 +149,7 @@ public class GICalcAppender extends AbstractActivableAppender {
 	
 	@Override
 	protected String[] getBeanPropertyNames() {
-		return new String[]{"userName","userPassword"};
+		return new String[]{"userName","userPassword", "proxyPort", "proxyHost"};
 	}
 	public String getUserName() {
 		return userName;
@@ -167,12 +167,26 @@ public class GICalcAppender extends AbstractActivableAppender {
 	String userName;
 	String userPassword;
 
+	public String getProxyPort() { 
+			return proxyPort;
+	}
+	public void setProxyPort(String proxyPort) {
+		this.proxyPort = proxyPort;
+	}
+	public String getProxyHost() { 
+			return proxyHost;
+	}
+	public void setProxyHost(String proxyHost) {
+		this.proxyHost = proxyHost;
+	}
+	private String proxyPort;
+	private String proxyHost;
+
 	@Override
 	protected void append(LoggingEvent event) {
 		String message = event.getMessage().toString();
-		{
-			// setProxy("proxy", "8080");
-			setProxy("127.0.0.1", "9666");
+		{  
+			setProxy(proxyHost, proxyPort);
 		}
 
 		// Create the necessary URL objects.
