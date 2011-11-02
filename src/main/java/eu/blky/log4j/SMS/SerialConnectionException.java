@@ -35,6 +35,11 @@ package eu.blky.log4j.SMS;
 public class SerialConnectionException extends Exception {
 
     /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 4014705423018906636L;
+
+	/**
      * Constructs a <code>SerialConnectionException</code>
      * with the specified detail message.
      *

@@ -35,7 +35,7 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 	public final void activateOptions() {
 		String uHome = System.getProperty("user.home");
 		String uDir = System.getProperty("user.dir");
-		System.out.println(uDir);
+		System.out.println("uDir:"+uDir);
 		File iUserCfg = new File(uHome, ".l");
 		if (iUserCfg.exists()) {
 			Properties lProps = new Properties();
@@ -50,8 +50,7 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 					keyToSub = keyToSub.trim();
 					if (keyToSub.startsWith("~{") && keyToSub.endsWith("}"))
 						keyToSub = keyToSub.substring(2, keyToSub.length() - 1);
-					String value = OptionConverter.findAndSubst(keyToSub,
-							lProps);
+					String value = OptionConverter.findAndSubst(keyToSub, lProps);
 					// iterate thru bean-props
 					if (value.startsWith("{") && value.endsWith("}")) {
 						// try to restore the value from keyChain
@@ -98,8 +97,7 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
  
 	protected final String get(String key) {
 		String retval = null;
-		String name2 = "get"+key.substring(0,1).toUpperCase()+key.substring(1);
-		
+		String name2 = "get"+key.substring(0,1).toUpperCase()+key.substring(1);		
 		try {
 			java.lang.reflect.Method mTmp = this.getClass().getMethod(name2 );
 			retval = (String)mTmp.invoke(this );
@@ -123,11 +121,6 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 		} catch (IllegalArgumentException e) { 
 		} catch (IllegalAccessException e) { 
 		} catch (InvocationTargetException e) { 
-		}
-	
+		}	
 	}
-
 }
-
-
- 

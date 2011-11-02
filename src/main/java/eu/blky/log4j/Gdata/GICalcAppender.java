@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar; 
 import java.util.TimeZone;
-  
 import org.apache.log4j.spi.LoggingEvent; 
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.DateTime;
@@ -18,9 +17,7 @@ import com.google.gdata.data.extensions.Reminder;
 import com.google.gdata.data.extensions.When;
 import com.google.gdata.data.extensions.Reminder.Method;
 import com.google.gdata.util.ServiceException;
-
 import eu.blky.log4j.AbstractActivableAppender;
- 
 
 /**
  * 
@@ -39,8 +36,7 @@ public class GICalcAppender extends AbstractActivableAppender {
 																	// host, int
 																	// port
 	{
-		System.setProperty("java.protocol.handler.pkgs",
-				"com.sun.net.ssl.internal.www.protocol");
+		System.setProperty("java.protocol.handler.pkgs", "com.sun.net.ssl.internal.www.protocol");
 		System.setProperty("http.proxyHost", proxyHost);
 		System.setProperty("http.proxyPort", proxyPort);
 		System.setProperty("https.proxyHost", proxyHost);
@@ -52,8 +48,6 @@ public class GICalcAppender extends AbstractActivableAppender {
 	// The string to add to the user's metafeedUrl to access the event feed for
 	// their primary calendar.
 	private static final String EVENT_FEED_URL_SUFFIX = "/private/full";
-
-	private static final String[] keys = {"userName", "userPassword"};
 
 	// The URL for the metafeed of the specified user.
 	// (e.g. http://www.google.com/feeds/calendar/jdoe@gmail.com)

@@ -6,9 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException; 
  
 // Referenced classes of package org.sonatype.plexus.components.sec.dispatcher:
 //            SecDispatcherException
@@ -95,7 +93,7 @@ public class SecUtil
         	}
         	
         }catch(Throwable e){e.printStackTrace();} 
-        System.out.println(secDir);
+        System.out.println("secDir:"+secDir);
         return new FileInputStream(new File(resource));
     }
 

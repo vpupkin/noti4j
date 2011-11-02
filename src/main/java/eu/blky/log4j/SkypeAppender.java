@@ -1,11 +1,9 @@
 package eu.blky.log4j;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
-
 import com.skype.Chat;
 import com.skype.Skype;
 import com.skype.SkypeException;
+import org.apache.log4j.spi.LoggingEvent;
 
 /** 
  * <b>Description:TODO</b>
@@ -16,11 +14,9 @@ import com.skype.SkypeException;
  * 
  * Creation:  20.10.2011::11:33:04<br> 
  */
-public class SkypeAppender extends AppenderSkeleton {
+public class SkypeAppender extends AbstractActivableAppender {
 
-	
 	private String  receiver;
-
 	public String getReceiver() { 
 			return receiver;
 	}
@@ -32,22 +28,15 @@ public class SkypeAppender extends AppenderSkeleton {
 		String format = getLayout().format(event);
 		sendMessage(format);
 	}
+	
 	public void sendMessage(String content) {
-		  try {
-		    Chat chatTmp = Skype.chat(receiver);
-			chatTmp.send(content);
-		  } catch (SkypeException ex) {
-			  ex.printStackTrace();
+	  try {
+	    Chat chatTmp = Skype.chat(receiver);
+		chatTmp.send(content);
+	  } catch (SkypeException ex) {
+		  ex.printStackTrace();
 
-		  }
-		}
-
-	/**
-	 * initiate the connection with local Skype-instance
-	 */
-	@Override
-	public void activateOptions(){
-		;
+	  }
 	}
 	
 	@Override
@@ -59,6 +48,10 @@ public class SkypeAppender extends AppenderSkeleton {
     public boolean requiresLayout() {
         return true;
     }
+	@Override
+	protected String[] getBeanPropertyNames() {
+		return new String[]{"receiver"};
+	}
 
 }
 

@@ -1,4 +1,3 @@
- 
 package eu.blky.log4j.sec;
 
 import java.security.*;
@@ -20,7 +19,7 @@ public class PBECipher
         _onLinux = false;
         try
         {
-            _digester = MessageDigest.getInstance("SHA-256");
+            _digester = MessageDigest.getInstance(DIGEST_ALG);
             if(System.getProperty("os.name", "blah").toLowerCase().indexOf("linux") != -1)
                 _onLinux = true;
             if(_onLinux)
@@ -60,7 +59,7 @@ public class PBECipher
             byte salt[] = getSalt(8);
             if(_secureRandom != null)
                 (new SecureRandom()).nextBytes(salt);
-            Cipher cipher = createCipher(password.getBytes("UTF8"), salt, 1);
+            Cipher cipher = createCipher(password.getBytes(STRING_ENCODING), salt, 1);
             byte encryptedBytes[] = cipher.doFinal(clearBytes);
             int len = encryptedBytes.length;
             byte padLen = (byte)(16 - (8 + len + 1) % 16);
@@ -70,7 +69,7 @@ public class PBECipher
             allEncryptedBytes[8] = padLen;
             System.arraycopy(encryptedBytes, 0, allEncryptedBytes, 9, len);
             byte encryptedTextBytes[] = Base64.encodeBase64(allEncryptedBytes);
-            String encryptedText = new String(encryptedTextBytes, "UTF8");
+            String encryptedText = new String(encryptedTextBytes, STRING_ENCODING);
             return encryptedText;
         }
         catch(Exception e)
@@ -91,9 +90,9 @@ public class PBECipher
             byte padLen = allEncryptedBytes[8];
             byte encryptedBytes[] = new byte[totalLen - 8 - 1 - padLen];
             System.arraycopy(allEncryptedBytes, 9, encryptedBytes, 0, encryptedBytes.length);
-            Cipher cipher = createCipher(password.getBytes("UTF8"), salt, 2);
+            Cipher cipher = createCipher(password.getBytes(STRING_ENCODING), salt, 2);
             byte clearBytes[] = cipher.doFinal(encryptedBytes);
-            String clearText = new String(clearBytes, "UTF8");
+            String clearText = new String(clearBytes, STRING_ENCODING);
             return clearText;
         }
         catch(Exception e)
@@ -137,8 +136,8 @@ public class PBECipher
         byte iv[] = new byte[16];
         System.arraycopy(keyAndIv, 0, key, 0, key.length);
         System.arraycopy(keyAndIv, key.length, iv, 0, iv.length);
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(mode, new SecretKeySpec(key, "AES"), new IvParameterSpec(iv));
+        Cipher cipher = Cipher.getInstance(CIPHER_ALG);
+        cipher.init(mode, new SecretKeySpec(key, KEY_ALG ), new IvParameterSpec(iv));
         return cipher;
     }
 

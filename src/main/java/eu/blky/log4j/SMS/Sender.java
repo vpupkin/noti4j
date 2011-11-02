@@ -182,18 +182,15 @@ public class Sender implements Runnable  {
           break;
         }
         step=step+1;
-
-        aThread.sleep(100);
+        Thread.sleep(100);
 
       }catch (Exception e){
           e.printStackTrace();
       }
     }
-
     mySerial.closeConnection() ;
 
     //if timed out set status
-
     if (timeOut ) {
         status=-2;
         log("*** time out at step "+step+"***");

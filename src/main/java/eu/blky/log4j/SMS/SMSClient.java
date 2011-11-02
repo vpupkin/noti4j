@@ -40,7 +40,7 @@ public class SMSClient implements Runnable{
       //in SYNCHRONOUS mode wait for return : 0 for OK, -2 for timeout, -1 for other errors
       if (mode==SYNCHRONOUS) {
           while (aSender.status == -1){
-            myThread.sleep (1000);
+            Thread.sleep (1000);
           }
       }
       if (aSender.status == 0) messageNo=aSender.messageNo ;
