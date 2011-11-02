@@ -35,7 +35,7 @@ public class KeyChainTest extends TestCase {
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		kc.store(ostream);
 		ostream.close();
-		System.out.println(ostream.toString());
+		//System.out.println(ostream.toString());
 	}
 	
 	
@@ -69,10 +69,16 @@ public class KeyChainTest extends TestCase {
 		assertEquals(new String(password),new String( actual)); 
 	}
 	
-	
+	/**
+	 * TODO read externally
+	 * 
+	 * @author vipup
+	 * @throws IOException
+	 */
 	public void testKeysChain() throws IOException { 
-		InputStream inputStream = this.getClass().getResourceAsStream("kc.dat");
-		char[] masterPasswordTmp = System.getenv("MAKEY").toCharArray();
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("kc.dat");
+		char[] masterPasswordTmp = //System.getenv("MAKEY").toCharArray();
+							 masterPassword ;
 		KeyChain kc = new KeyChain(masterPasswordTmp, inputStream);
 		String user = "junit";
 		char[] password = "secret".toCharArray();
