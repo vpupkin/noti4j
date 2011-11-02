@@ -1,8 +1,4 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   DefaultSecDispatcher.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.*;
@@ -40,7 +36,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
         String res;
         try
         {
-            Map attr = stripAttributes(bare);
+            Map<String, String> attr = stripAttributes(bare);
             res = null;
             SettingsSecurity sec = getSec();
             if(attr == null || attr.get("type") == null)
@@ -52,7 +48,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
                 String type = (String)attr.get("type");
                 if(_decryptors == null)
                     throw new SecDispatcherException("plexus container did not supply any required dispatchers - cannot lookup " + type);
-                Map conf = SecUtil.getConfig(sec, type);
+                Map<?, ?> conf = SecUtil.getConfig(sec, type);
                 PasswordDecryptor dispatcher = (PasswordDecryptor)_decryptors.get(type);
                 if(dispatcher == null)
                 {
@@ -82,7 +78,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
             return str;
     }
 
-    private Map stripAttributes(String str)
+    private Map<String, String> stripAttributes(String str)
     {
         int start = str.indexOf('[');
         int stop = str.indexOf(']');
@@ -93,14 +89,14 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
             String attrs = str.substring(start + 1, stop).trim();
             if(attrs == null || attrs.length() < 1)
                 return null;
-            Map res = null;
+            Map<String, String> res = null;
             StringTokenizer st = new StringTokenizer(attrs, ", ");
             do
             {
                 if(!st.hasMoreTokens())
                     break;
                 if(res == null)
-                    res = new HashMap(st.countTokens());
+                    res = new HashMap<String, String>(st.countTokens());
                 String pair = st.nextToken();
                 int pos = pair.indexOf('=');
                 if(pos != -1)
@@ -134,7 +130,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
     private SettingsSecurity getSec()
         throws SecDispatcherException
     {
-        String location = System.getProperty("settings.security", getConfigurationFile());
+        String location = System.getProperty(SYSTEM_PROPERTY_SEC_LOCATION, getConfigurationFile());
         String realLocation = location.charAt(0) != '~' ? location : System.getProperty("user.home") + location.substring(1);
         SettingsSecurity sec = SecUtil.read(realLocation, true);
         if(sec == null)
@@ -151,7 +147,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
             throw new SecDispatcherException("master password is not set");
         try
         {
-            return _cipher.decryptDecorated(master, "settings.security");
+            return _cipher.decryptDecorated(master, SYSTEM_PROPERTY_SEC_LOCATION);
         }
         catch(PlexusCipherException e)
         {
@@ -233,7 +229,7 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
         dd._cipher = dc;
         if(showMaster)
         {
-            System.out.println(dc.encryptAndDecorate(pass, "settings.security"));
+            System.out.println(dc.encryptAndDecorate(pass, SYSTEM_PROPERTY_SEC_LOCATION));
         } else
         {
             SettingsSecurity sec = dd.getSec();
@@ -246,6 +242,6 @@ public class DefaultSecDispatcher extends AbstractLogEnabled
     public static final char ATTR_START = 91;
     public static final char ATTR_STOP = 93;
     protected PlexusCipher _cipher;
-    protected Map _decryptors;
+    protected Map<?, ?> _decryptors;
     protected String _configurationFile;
 }

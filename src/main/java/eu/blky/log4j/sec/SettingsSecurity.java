@@ -1,8 +1,4 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SettingsSecurity.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.Serializable;
@@ -16,7 +12,11 @@ public class SettingsSecurity
     implements Serializable
 {
 
-    public SettingsSecurity()
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 2772161728965006984L;
+	public SettingsSecurity()
     {
         modelEncoding = "UTF-8";
     }
@@ -33,10 +33,10 @@ public class SettingsSecurity
         }
     }
 
-    public List getConfigurations()
+    public List<Config> getConfigurations()
     {
         if(configurations == null)
-            configurations = new ArrayList();
+            configurations = new ArrayList<Config>();
         return configurations;
     }
 
@@ -67,7 +67,7 @@ public class SettingsSecurity
         }
     }
 
-    public void setConfigurations(List configurations)
+    public void setConfigurations(List<Config> configurations)
     {
         this.configurations = configurations;
     }
@@ -89,6 +89,6 @@ public class SettingsSecurity
 
     private String master;
     private String relocation;
-    private List configurations;
+    private List<Config> configurations;
     private String modelEncoding;
 }

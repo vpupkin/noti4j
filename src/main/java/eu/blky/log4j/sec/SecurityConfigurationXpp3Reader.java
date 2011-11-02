@@ -1,21 +1,18 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SecurityConfigurationXpp3Reader.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+//import java.text.DateFormat;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.Locale;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+
 import java.util.Set;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.xml.pull.MXParser;
@@ -30,7 +27,7 @@ public class SecurityConfigurationXpp3Reader
         addDefaultEntities = true;
     }
 
-    private boolean checkFieldWithDuplicate(XmlPullParser parser, String tagName, String alias, Set parsed)
+    private boolean checkFieldWithDuplicate(XmlPullParser parser, String tagName, String alias, Set<String> parsed)
         throws XmlPullParserException
     {
         if(!parser.getName().equals(tagName) && !parser.getName().equals(alias))
@@ -49,175 +46,175 @@ public class SecurityConfigurationXpp3Reader
     {
         return addDefaultEntities;
     }
-
-    private boolean getBooleanValue(String s, String attribute, XmlPullParser parser)
-        throws XmlPullParserException
-    {
-        return getBooleanValue(s, attribute, parser, null);
-    }
-
-    private boolean getBooleanValue(String s, String attribute, XmlPullParser parser, String defaultValue)
-        throws XmlPullParserException
-    {
-        if(s != null && s.length() != 0)
-            return Boolean.valueOf(s).booleanValue();
-        if(defaultValue != null)
-            return Boolean.valueOf(defaultValue).booleanValue();
-        else
-            return false;
-    }
-
-    private byte getByteValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Byte.valueOf(s).byteValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a byte", parser, null);
-        }
-        return 0;
-    }
-
-    private char getCharacterValue(String s, String attribute, XmlPullParser parser)
-        throws XmlPullParserException
-    {
-        if(s != null)
-            return s.charAt(0);
-        else
-            return '\0';
-    }
-
-    private Date getDateValue(String s, String attribute, XmlPullParser parser)
-        throws XmlPullParserException
-    {
-        return getDateValue(s, attribute, null, parser);
-    }
-
-    private Date getDateValue(String s, String attribute, String dateFormat, XmlPullParser parser)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            String effectiveDateFormat = dateFormat;
-            if(dateFormat == null)
-                effectiveDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-            if("long".equals(effectiveDateFormat))
-                try
-                {
-                    return new Date(Long.parseLong(s));
-                }
-                catch(NumberFormatException e)
-                {
-                    throw new XmlPullParserException(e.getMessage());
-                }
-            try
-            {
-                DateFormat dateParser = new SimpleDateFormat(effectiveDateFormat, Locale.US);
-                return dateParser.parse(s);
-            }
-            catch(ParseException e)
-            {
-                throw new XmlPullParserException(e.getMessage());
-            }
-        } else
-        {
-            return null;
-        }
-    }
-
-    private double getDoubleValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Double.valueOf(s).doubleValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a floating point number", parser, null);
-        }
-        return 0.0D;
-    }
-
-    private float getFloatValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Float.valueOf(s).floatValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a floating point number", parser, null);
-        }
-        return 0.0F;
-    }
-
-    private int getIntegerValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Integer.valueOf(s).intValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be an integer", parser, null);
-        }
-        return 0;
-    }
-
-    private long getLongValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Long.valueOf(s).longValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a long integer", parser, null);
-        }
-        return 0L;
-    }
-
-    private String getRequiredAttributeValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s == null && strict)
-            throw new XmlPullParserException("Missing required value for attribute '" + attribute + "'", parser, null);
-        else
-            return s;
-    }
-
-    private short getShortValue(String s, String attribute, XmlPullParser parser, boolean strict)
-        throws XmlPullParserException
-    {
-        if(s != null)
-        {
-            try
-            {
-                return Short.valueOf(s).shortValue();
-            }
-            catch(NumberFormatException e) { }
-            if(strict)
-                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a short integer", parser, null);
-        }
-        return 0;
-    }
+//
+//    private boolean getBooleanValue(String s, String attribute, XmlPullParser parser)
+//        throws XmlPullParserException
+//    {
+//        return getBooleanValue(s, attribute, parser, null);
+//    }
+//
+//    private boolean getBooleanValue(String s, String attribute, XmlPullParser parser, String defaultValue)
+//        throws XmlPullParserException
+//    {
+//        if(s != null && s.length() != 0)
+//            return Boolean.valueOf(s).booleanValue();
+//        if(defaultValue != null)
+//            return Boolean.valueOf(defaultValue).booleanValue();
+//        else
+//            return false;
+//    }
+//
+//    private byte getByteValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Byte.valueOf(s).byteValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a byte", parser, null);
+//        }
+//        return 0;
+//    }
+//
+//    private char getCharacterValue(String s, String attribute, XmlPullParser parser)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//            return s.charAt(0);
+//        else
+//            return '\0';
+//    }
+//
+//    private Date getDateValue(String s, String attribute, XmlPullParser parser)
+//        throws XmlPullParserException
+//    {
+//        return getDateValue(s, attribute, null, parser);
+//    }
+//
+//    private Date getDateValue(String s, String attribute, String dateFormat, XmlPullParser parser)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            String effectiveDateFormat = dateFormat;
+//            if(dateFormat == null)
+//                effectiveDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+//            if("long".equals(effectiveDateFormat))
+//                try
+//                {
+//                    return new Date(Long.parseLong(s));
+//                }
+//                catch(NumberFormatException e)
+//                {
+//                    throw new XmlPullParserException(e.getMessage());
+//                }
+//            try
+//            {
+//                DateFormat dateParser = new SimpleDateFormat(effectiveDateFormat, Locale.US);
+//                return dateParser.parse(s);
+//            }
+//            catch(ParseException e)
+//            {
+//                throw new XmlPullParserException(e.getMessage());
+//            }
+//        } else
+//        {
+//            return null;
+//        }
+//    }
+//
+//    private double getDoubleValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Double.valueOf(s).doubleValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a floating point number", parser, null);
+//        }
+//        return 0.0D;
+//    }
+//
+//    private float getFloatValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Float.valueOf(s).floatValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a floating point number", parser, null);
+//        }
+//        return 0.0F;
+//    }
+//
+//    private int getIntegerValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Integer.valueOf(s).intValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be an integer", parser, null);
+//        }
+//        return 0;
+//    }
+//
+//    private long getLongValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Long.valueOf(s).longValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a long integer", parser, null);
+//        }
+//        return 0L;
+//    }
+//
+//    private String getRequiredAttributeValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s == null && strict)
+//            throw new XmlPullParserException("Missing required value for attribute '" + attribute + "'", parser, null);
+//        else
+//            return s;
+//    }
+//
+//    private short getShortValue(String s, String attribute, XmlPullParser parser, boolean strict)
+//        throws XmlPullParserException
+//    {
+//        if(s != null)
+//        {
+//            try
+//            {
+//                return Short.valueOf(s).shortValue();
+//            }
+//            catch(NumberFormatException e) { }
+//            if(strict)
+//                throw new XmlPullParserException("Unable to parse element '" + attribute + "', must be a short integer", parser, null);
+//        }
+//        return 0;
+//    }
 
     private String getTrimmedValue(String s)
     {
@@ -230,14 +227,14 @@ public class SecurityConfigurationXpp3Reader
         throws IOException, XmlPullParserException
     {
         Config config = new Config();
-        Set parsed = new HashSet();
+        Set<String> parsed = new HashSet<String>();
         while(parser.nextTag() == 2) 
             if(checkFieldWithDuplicate(parser, "name", null, parsed))
                 config.setName(getTrimmedValue(parser.nextText()));
             else
             if(checkFieldWithDuplicate(parser, "properties", null, parsed))
             {
-                List properties = new ArrayList();
+                List<ConfigProperty> properties = new ArrayList<ConfigProperty>();
                 config.setProperties(properties);
                 while(parser.nextTag() == 2) 
                     if(parser.getName().equals("property"))
@@ -262,7 +259,7 @@ public class SecurityConfigurationXpp3Reader
         throws IOException, XmlPullParserException
     {
         ConfigProperty configProperty = new ConfigProperty();
-        Set parsed = new HashSet();
+        Set<String> parsed = new HashSet<String>();
         while(parser.nextTag() == 2) 
             if(checkFieldWithDuplicate(parser, "name", null, parsed))
                 configProperty.setName(getTrimmedValue(parser.nextText()));
@@ -283,7 +280,7 @@ public class SecurityConfigurationXpp3Reader
         throws IOException, XmlPullParserException
     {
         SettingsSecurity settingsSecurity = new SettingsSecurity();
-        Set parsed = new HashSet();
+        Set<String> parsed = new HashSet<String>();
         int eventType = parser.getEventType();
         boolean foundRoot = false;
 label0:
@@ -310,7 +307,7 @@ label0:
             }
             if(checkFieldWithDuplicate(parser, "configurations", null, parsed))
             {
-                List configurations = new ArrayList();
+                List<Config> configurations = new ArrayList<Config>();
                 settingsSecurity.setConfigurations(configurations);
                 do
                 {

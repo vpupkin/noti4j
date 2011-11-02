@@ -1,8 +1,4 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   PasswordDecryptor.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.util.Map;
@@ -13,7 +9,7 @@ import java.util.Map;
 public interface PasswordDecryptor
 {
 
-    public abstract String decrypt(String s, Map map, Map map1)
+    public abstract String decrypt(String s, Map<?, ?> map, Map<?, ?> map1)
         throws SecDispatcherException;
 
  //   public static final String ROLE = (_cls1.class.org.sonatype.plexus.components.sec.dispatcher.PasswordDecryptor != null ? _cls1.class.org.sonatype.plexus.components.sec.dispatcher.PasswordDecryptor : (_cls1.class.org.sonatype.plexus.components.sec.dispatcher.PasswordDecryptor = _cls1.class.("org.sonatype.plexus.components.sec.dispatcher.PasswordDecryptor"))).getName();
@@ -37,7 +33,7 @@ public interface PasswordDecryptor
 //            }
 //        }
 
-        static Class class$org$sonatype$plexus$components$sec$dispatcher$PasswordDecryptor; /* synthetic field */
+        static Class<?> class$org$sonatype$plexus$components$sec$dispatcher$PasswordDecryptor; /* synthetic field */
     }
 
 }

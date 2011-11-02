@@ -1,8 +1,4 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SecUtil.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.*;
@@ -11,6 +7,8 @@ import java.net.URL;
 import java.util.*;
 
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory; 
  
 // Referenced classes of package org.sonatype.plexus.components.sec.dispatcher:
 //            SecDispatcherException
@@ -18,68 +16,28 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 public class SecUtil
 {
 
-    public SecUtil()
-    {
-    }
-
+    //private static final Logger log = LoggerFactory.getLogger("eu.blky.log4j.sec.SecUtil");
+ 
     public static SettingsSecurity read(String location, boolean cycle)
         throws SecDispatcherException
-    {
-    	if(1==2)
-    		throw new SecDispatcherException("no implemented!");
-    	InputStream in;
-
+    { 
+    	InputStream in; 
 		SettingsSecurity settingssecurity = null;
-		try {
-			in = toStream(location);
-			settingssecurity=	(new SecurityConfigurationXpp3Reader()).read(in);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	//        InputStream in;
-//        if(location == null)
-//            throw new SecDispatcherException("location to read from is null");
-//        in = null;
-//        SettingsSecurity settingssecurity1;
-//        try
-//        {
-//        SettingsSecurity sec;
-//        SettingsSecurity settingssecurity;
-//        in = toStream(location);
-//        sec = (new SecurityConfigurationXpp3Reader()).read(in);
-//        in.close();
-//        if(!cycle || sec.getRelocation() == null)
-//            break MISSING_BLOCK_LABEL_64;
-//        settingssecurity = read(sec.getRelocation(), true);
-//        return settingssecurity;
-//       
-//
-//            settingssecurity1 = sec;
-//        }
-//        catch(Exception e)
-//        {
-//            throw new SecDispatcherException(e);
-//        }
-//        if(in == null)
-//        	return settingssecurity1;
-//        //local;
-//        
-//            try
-//            {
-//                in.close();
-//            }
-//            catch(Exception e) { }
-//        //JVM INSTR ret 6;
-//            
-    	
+		do{
+			try {
+				in = toStream(location);
+				SecurityConfigurationXpp3Reader sec = new SecurityConfigurationXpp3Reader();
+				settingssecurity=	sec.read(in);
+			} catch (MalformedURLException e) {
+				throw new SecDispatcherException(e);
+			} catch (IOException e) {
+				throw new SecDispatcherException(e);
+			} catch (XmlPullParserException e) {
+				throw new SecDispatcherException(e);
+			}
+			location = settingssecurity.getRelocation() ;
+		}while(cycle && location != null	);
+		
     	return settingssecurity;
     }
 
@@ -98,34 +56,67 @@ public class SecUtil
                 String p = URL_PROTOCOLS[i];
                 if(protocol.regionMatches(true, 0, p, 0, p.length()))
                     return (new URL(p + "://" + resource)).openStream();
-            }
-
+            } 
         }
-        if (new File(System.getProperty("user.dir"),resource).exists()) return new FileInputStream(new File(System.getProperty("user.dir"),resource));
-        if (new File(System.getProperty("user.home"),resource).exists()) return new FileInputStream(new File(System.getProperty("user.home"),resource));
-        if (new File(System.getenv("security.home"),resource).exists()) return new FileInputStream(new File(System.getProperty("security.home"),resource)); 
-        if (SecUtil.class.getClassLoader().getResourceAsStream(resource)!=null)return SecUtil.class.getClassLoader().getResourceAsStream(resource); 
+        File secDir = null;
+        try{// assums that the path to cgf-file fully specified
+        	if (new File(  resource).exists()) {
+        		//log.debug("MASTERPASSWORD loaded  from ["+resource+"]");//+(new File(resource)).toURI()
+        		return new FileInputStream(new File(resource));
+        	}
+        	
+        }catch(Throwable e){e.printStackTrace();}try{
+        	if (new File(secDir = new File(System.getProperty("user.dir")),resource).exists()) {
+        		//log.debug("MASTERPASSWORD loaded from {}/{}",System.getProperty("user.dir"),resource );
+        		return new FileInputStream(new File(System.getProperty("user.dir"),resource));
+        	}
+        }catch(Throwable e){e.printStackTrace();}try{
+        	if (new File(secDir = new File(System.getProperty("user.home")),resource).exists()) {
+        		//log.debug("MASTERPASSWORD loaded from {}/{}",System.getProperty("user.home"),resource );
+        		return new FileInputStream(new File(System.getProperty("user.home"),resource));
+        	} 
+     	
+        	
+        }catch(Throwable e){e.printStackTrace();}try{
+        	if (SecUtil.class.getClassLoader().getResourceAsStream(resource)!=null){
+        		//log.debug("MASTERPASSWORD loaded from {}/{}",secDir = new File(SecUtil.class.getClassLoader().getResource(resource).toURI()),resource );
+        		return SecUtil.class.getClassLoader().getResourceAsStream(resource);
+        	}
+        	
+        }catch(Throwable e){e.printStackTrace();}try{
+        	if (System.getProperty("MASTERPASSWORD")!=null){
+        		//log.debug("MASTERPASSWORD loaded from ${MASTERPASSWORD}" );
+        		return new ByteArrayInputStream(("<settingsSecurity><master>{"+System.getProperty("MASTERPASSWORD")+"}</master></settingsSecurity>").getBytes());
+        	}
+        }catch(Throwable e){e.printStackTrace();}try{
+        	if (System.getenv("MASTERPASSWORD")!=null){
+        		//log.debug("MASTERPASSWORD loaded from env.MASTERPASSWORD" );
+        		return new ByteArrayInputStream(("<settingsSecurity><master>{"+System.getenv("MASTERPASSWORD")+"}</master></settingsSecurity>").getBytes());
+        	}
+        	
+        }catch(Throwable e){e.printStackTrace();} 
+        System.out.println(secDir);
         return new FileInputStream(new File(resource));
     }
 
-    public static Map getConfig(SettingsSecurity sec, String name)
+    public static Map<String, String> getConfig(SettingsSecurity sec, String name)
     {
         if(name == null)
             return null;
-        List cl = sec.getConfigurations();
+        List<?> cl = sec.getConfigurations();
         if(cl == null)
             return null;
-        for(Iterator i = cl.iterator(); i.hasNext();)
+        for(Iterator<?> i = cl.iterator(); i.hasNext();)
         {
             Config cf = (Config)i.next();
             if(name.equals(cf.getName()))
             {
-                List pl = cf.getProperties();
+                List<?> pl = cf.getProperties();
                 if(pl == null || pl.isEmpty())
                     return null;
-                Map res = new HashMap(pl.size());
+                Map<String, String> res = new HashMap<String, String>(pl.size());
                 ConfigProperty p;
-                for(Iterator j = pl.iterator(); j.hasNext(); res.put(p.getName(), p.getValue()))
+                for(Iterator<?> j = pl.iterator(); j.hasNext(); res.put(p.getName(), p.getValue()))
                     p = (ConfigProperty)j.next();
 
                 return res;

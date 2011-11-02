@@ -21,7 +21,7 @@ public class LocalCallbackHandler implements CallbackHandler {
 	public void handle(Callback[] callbacks) throws IOException,
 			UnsupportedCallbackException {
 		for(Callback cbTmp:callbacks){
-			((PasswordCallback)cbTmp).setPassword("Vasja1234".toCharArray());
+			((PasswordCallback)cbTmp).setPassword("V5352351234".toCharArray());
 		}
 	}
 

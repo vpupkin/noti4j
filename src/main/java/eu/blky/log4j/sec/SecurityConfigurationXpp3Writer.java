@@ -1,14 +1,9 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SecurityConfigurationXpp3Writer.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Iterator; 
 import org.codehaus.plexus.util.xml.pull.MXSerializer;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
  
@@ -43,7 +38,7 @@ public class SecurityConfigurationXpp3Writer
             {
                 serializer.startTag(NAMESPACE, "properties");
                 ConfigProperty o;
-                for(Iterator iter = config.getProperties().iterator(); iter.hasNext(); writeConfigProperty(o, "property", serializer))
+                for(Iterator<?> iter = config.getProperties().iterator(); iter.hasNext(); writeConfigProperty(o, "property", serializer))
                     o = (ConfigProperty)iter.next();
 
                 serializer.endTag(NAMESPACE, "properties");
@@ -80,7 +75,7 @@ public class SecurityConfigurationXpp3Writer
             {
                 serializer.startTag(NAMESPACE, "configurations");
                 Config o;
-                for(Iterator iter = settingsSecurity.getConfigurations().iterator(); iter.hasNext(); writeConfig(o, "configuration", serializer))
+                for(Iterator<?> iter = settingsSecurity.getConfigurations().iterator(); iter.hasNext(); writeConfig(o, "configuration", serializer))
                     o = (Config)iter.next();
 
                 serializer.endTag(NAMESPACE, "configurations");

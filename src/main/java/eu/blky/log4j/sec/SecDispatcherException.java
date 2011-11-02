@@ -1,15 +1,16 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SecDispatcherException.java
-
+ 
 package eu.blky.log4j.sec;
 
 
 public class SecDispatcherException extends Exception
 {
 
-    public SecDispatcherException()
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -2888701662942798096L;
+
+	public SecDispatcherException()
     {
     }
 

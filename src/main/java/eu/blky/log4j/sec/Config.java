@@ -1,8 +1,4 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   Config.java
-
+ 
 package eu.blky.log4j.sec;
 
 import java.io.Serializable;
@@ -16,7 +12,11 @@ public class Config
     implements Serializable
 {
 
-    public Config()
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -3362786840946065206L;
+	public Config()
     {
     }
 
@@ -37,10 +37,10 @@ public class Config
         return name;
     }
 
-    public List getProperties()
+    public List<ConfigProperty> getProperties()
     {
         if(properties == null)
-            properties = new ArrayList();
+            properties = new ArrayList<ConfigProperty>();
         return properties;
     }
 
@@ -61,11 +61,11 @@ public class Config
         this.name = name;
     }
 
-    public void setProperties(List properties)
+    public void setProperties(List<ConfigProperty> properties)
     {
         this.properties = properties;
     }
 
     private String name;
-    private List properties;
+    private List<ConfigProperty> properties;
 }

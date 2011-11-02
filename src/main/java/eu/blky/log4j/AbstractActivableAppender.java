@@ -29,6 +29,7 @@ import eu.blky.log4j.sec.SettingsSecurity;
 public abstract class AbstractActivableAppender extends AppenderSkeleton {
 	
 	protected abstract String[] getBeanPropertyNames();
+	protected SettingsSecurity sec ;
 
 	@Override
 	public final void activateOptions() {
@@ -76,67 +77,21 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 
 	protected final String decryptPassword(String value) throws SecDispatcherException,
 			PlexusCipherException {
-		// else if ( commandLine.hasOption( CLIManager.ENCRYPT_PASSWORD ) )
-		// {
-		// String passwd = commandLine.getOptionValue(
-		// CLIManager.ENCRYPT_PASSWORD );
-		//
-		// dispatcher = (DefaultSecDispatcher) embedder.lookup(
-		// SecDispatcher.ROLE );
-		// String configurationFile = dispatcher.getConfigurationFile();
-		// if ( configurationFile.startsWith( "~" ) )
-		// {
-		// configurationFile = System.getProperty( "user.home" ) +
-		// configurationFile.substring( 1 );
-		// }
-		// String file = System.getProperty(
-		// DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION, configurationFile
-		// );
-		// embedder.release( dispatcher );
-		//
-		// String master = null;
-		//
-		// SettingsSecurity sec = SecUtil.read( file, true );
-		// if ( sec != null )
-		// {
-		// master = sec.getMaster();
-		// }
-		//
-		// if ( master == null )
-		// {
-		// System.err.println(
-		// "Master password is not set in the setting security file" );
-		//
-		// return 1;
-		// }
-		//
-		// DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-		// String masterPasswd =
-		// cipher.decryptDecorated( master,
-		// DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION );
-		// System.out.println( cipher.encryptAndDecorate( passwd, masterPasswd )
-		// );
-		//
-		// return 0;
-		// }
-	
 		String configurationFile = "master.xml";
-		if (configurationFile.startsWith("~")) {
-			configurationFile = System.getProperty("user.home")
-					+ configurationFile.substring(1);
-		}
-		//new File(".").getAbsolutePath()
-		String file = System.getProperty(
-				DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION,
-				configurationFile);
-		SettingsSecurity sec = SecUtil.read(file, true);
+//DefaultSecDispatcher()	    {	        _configurationFile = "~/.settings-security.xml";
+//		if (configurationFile.startsWith("~")) {
+//			configurationFile = System.getProperty("user.home") + configurationFile.substring(1);
+//		}
+//new File(".").getAbsolutePath()
+		String file = System.getProperty( DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION, configurationFile);
+		// try to retrieve the master-configuration from web, dav, file, userhome, userdir, env, e.t.c..
+		sec = SecUtil.read(file, true);
 		String master = null;
 		if (sec != null) {
 			master = sec.getMaster();
 		}
 		DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-		String masterPasswd = cipher.decryptDecorated(master,
-				DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION);
+		String masterPasswd = cipher.decryptDecorated(master, DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION);
 		String pwdTmp = cipher.decrypt(value , masterPasswd);
 		return pwdTmp;
 	}

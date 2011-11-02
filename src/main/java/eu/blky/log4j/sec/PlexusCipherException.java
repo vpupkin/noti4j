@@ -1,15 +1,16 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   PlexusCipherException.java
-
+ 
 package eu.blky.log4j.sec;
 
 
 public class PlexusCipherException extends Exception
 {
 
-    public PlexusCipherException()
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 4726529313465825414L;
+
+	public PlexusCipherException()
     {
     }
 

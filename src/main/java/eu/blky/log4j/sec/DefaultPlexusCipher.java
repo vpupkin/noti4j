@@ -1,11 +1,6 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   DefaultPlexusCipher.java
-
+ 
 package eu.blky.log4j.sec;
-
-import java.io.PrintStream;
+ 
 import java.security.Provider;
 import java.security.Security;
 import java.util.*;
@@ -89,14 +84,14 @@ public class DefaultPlexusCipher extends AbstractLogEnabled
 
     public static String[] getServiceTypes()
     {
-        Set result = new HashSet();
+        Set<String> result = new HashSet<String>();
         Provider providers[] = Security.getProviders();
         for(int i = 0; i < providers.length; i++)
         {
-            Set keys = providers[i].keySet();
+            Set<?> keys = providers[i].keySet();
             String key;
             int ix;
-            for(Iterator it = keys.iterator(); it.hasNext(); result.add(key.substring(0, ix)))
+            for(Iterator<?> it = keys.iterator(); it.hasNext(); result.add(key.substring(0, ix)))
             {
                 key = (String)it.next();
                 key = key.split(" ")[0];
@@ -112,13 +107,13 @@ public class DefaultPlexusCipher extends AbstractLogEnabled
 
     public static String[] getCryptoImpls(String serviceType)
     {
-        Set result = new HashSet();
+        Set<String> result = new HashSet<String>();
         Provider providers[] = Security.getProviders();
 label0:
         for(int i = 0; i < providers.length; i++)
         {
-            Set keys = providers[i].keySet();
-            Iterator it = keys.iterator();
+            Set<?> keys = providers[i].keySet();
+            Iterator<?> it = keys.iterator();
             do
             {
                 if(!it.hasNext())

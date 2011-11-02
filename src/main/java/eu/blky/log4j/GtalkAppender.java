@@ -1,8 +1,7 @@
 package eu.blky.log4j;
 
 import javax.security.auth.callback.CallbackHandler;
-
-import org.apache.log4j.AppenderSkeleton;
+ 
 import org.apache.log4j.spi.LoggingEvent;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -25,7 +24,11 @@ import org.jivesoftware.smack.proxy.ProxyInfo.ProxyType;
  * 
  * Creation:  20.10.2011::11:33:04<br> 
  */
-public class GtalkAppender extends AppenderSkeleton {
+public class GtalkAppender extends  AbstractActivableAppender {
+	@Override
+	protected String[] getBeanPropertyNames() {
+		return new String[]{"user","password","receiver"};
+	}
 	  private String user;
 	  private String password;
 	  private String receiver;
@@ -99,14 +102,7 @@ public class GtalkAppender extends AppenderSkeleton {
 		this.user = user;
 	}
 
-	/**
-	 * initiate the connection with local Skype-instance
-	 */
-	@Override
-	public void activateOptions(){
-		makeConnection() ;
-	}
-	
+ 
 	private final void _toDoConnectionVieProxy(){
     	//ProxyInfo proxy = new ProxyInfo(ProxyType.HTTP, "proxy.host", 8080, null, null);
 //    	ProxyInfo proxy = new ProxyInfo(ProxyType.HTTP, "proxy.host", 8080, null, null);
