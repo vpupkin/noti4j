@@ -127,7 +127,15 @@ public class SecUtil
     public static final String PROTOCOL_DELIM = "://";
     public static final int PROTOCOL_DELIM_LEN = "://".length();
     public static final String URL_PROTOCOLS[] = {
-        "http", "https", "dav", "file", "davs", "webdav", "webdavs", "dav+http", "dav+https"
+        //@deprecated         "http", 
+        "https", 
+        //@deprecated         "dav", 
+        //@deprecated         "file", 
+        "davs", 
+        //@deprecated 		   "webdav", 
+        "webdavs", 
+        //@deprecated 			"dav+http", 
+        "dav+https"
     };
 
 }

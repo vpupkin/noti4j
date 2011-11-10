@@ -18,7 +18,7 @@ import eu.blky.log4j.sec.SecUtil;
 import eu.blky.log4j.sec.SettingsSecurity;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>Parent for any Log4J appender with l-ciphered properties.</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
@@ -31,6 +31,19 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 	protected abstract String[] getBeanPropertyNames();
 	protected SettingsSecurity sec ;
 
+	/**
+	 * activate all properties of Appender via substitution the common defined properties, located 
+	 * in the File with name ".l".
+	 * 
+	 * The l-file will be "recognized" by follow seq:
+	 *   1) ${ System.getProperty("user.home") + ".l" } 
+	 *   
+	 *   
+	 *   Any Appender-Bean-Property could be encrypted  by master-pwd.
+	 *   
+	 *   @see eu.blky.log4j.sec.SecUtil.toStream(String)
+	 * 
+	 */
 	@Override
 	public final void activateOptions() {
 		String uHome = System.getProperty("user.home");
