@@ -138,7 +138,7 @@
 	<dependency>
 		<groupId>nr.co.blky</groupId>
 		<artifactId>skypeproxy</artifactId>
-		<version>0.0.8-SNAPSHOT</version>
+		<version>0.0.10</version>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.maven</groupId>
