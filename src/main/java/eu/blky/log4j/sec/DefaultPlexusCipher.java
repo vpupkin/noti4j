@@ -49,9 +49,10 @@ public class DefaultPlexusCipher extends AbstractLogEnabled
     {
         if(str == null || str.length() < 1)
             return str;
-        if(isEncryptedString(str))
-            return decrypt(unDecorate(str), passPhrase);
-        else
+        if(isEncryptedString(str)) {
+			String unDecorate = unDecorate(str);
+			return decrypt(unDecorate, passPhrase);
+		} else
             return decrypt(str, passPhrase);
     }
 

@@ -82,7 +82,7 @@ public class PBECipher
         throws PlexusCipherException
     {
         try
-        {
+        { // ##0-7: salt, #8-padLenght, #9..${len-padLen-1}-DATA,#${len-padLen}...>>-pad 
             byte allEncryptedBytes[] = Base64.decodeBase64(encryptedText.getBytes());
             int totalLen = allEncryptedBytes.length;
             byte salt[] = new byte[8];

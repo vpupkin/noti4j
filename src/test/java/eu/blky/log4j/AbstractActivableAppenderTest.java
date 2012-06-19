@@ -53,7 +53,7 @@ public class AbstractActivableAppenderTest extends TestCase {
 			@Override
 			public void close() {
 				try {
-					System.out.println(actual = decryptPassword("{fWoAIt45gMoHGQHfg8LvGqZr5ZNSQAQi7N3sghLb0vk=}"));
+					System.out.println(actual = decryptPassword("{bZcPur2PjkcHUlCCChcYZaPZkODOYXi9alwgC+DjDiA=}"));
 					settingsSecurity = sec ;
 				} catch (SecDispatcherException e) {
 					// TODO Auto-generated catch block

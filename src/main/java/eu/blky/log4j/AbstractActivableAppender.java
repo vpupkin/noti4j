@@ -105,6 +105,7 @@ public abstract class AbstractActivableAppender extends AppenderSkeleton {
 		DefaultPlexusCipher cipher = new DefaultPlexusCipher();
 		String masterPasswd = cipher.decryptDecorated(master, DefaultSecDispatcher.SYSTEM_PROPERTY_SEC_LOCATION);
 		String pwdTmp = cipher.decrypt(value , masterPasswd);
+		//System.out.println(cipher.encrypt(pwdTmp,  masterPasswd));
 		return pwdTmp;
 	}
  

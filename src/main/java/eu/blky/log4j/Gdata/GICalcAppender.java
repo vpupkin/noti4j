@@ -215,8 +215,7 @@ public class GICalcAppender extends AbstractActivableAppender {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Successfully created event "
-				+ singleEvent.getTitle().getPlainText());
+		//System.out.println("Successfully created event " + singleEvent.getTitle().getPlainText());
 	}
 	/**
 	 * Adds a reminder to a calendar event.

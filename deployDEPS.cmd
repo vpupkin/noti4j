@@ -1,0 +1,6 @@
+rem mvn -e deploy:deploy-file -DgroupId=com.google.gdata.client -DartifactId=jsr305 -Dversion=1.0 -Dpackaging=jar -Dfile=jsr305.jar  -DrepositoryId=pegasusRELEASE -Durl=dav:https://pegasus.peras.fiducia.de/upme/up/RELEASES
+rem mvn -e deploy:deploy-file -DgroupId=com.google.gdata.client -DartifactId=maps -Dversion=2.0 -Dpackaging=jar -Dfile=gdata-maps-2.0.jar 
+rem mvn deploy:deploy-file -DgroupId=com.google.gdata.client -DartifactId=core -Dversion=1.0 -DrepositoryId=pegasusRELEASE -Durl=dav:https://pegasus.peras.fiducia.de/upme/up/RELEASES -Dpackaging=jar -Dfile=gdata-core-1.0.jar
+rem mvn deploy:deploy-file -DgroupId=com.google.gdata.client -DartifactId=calendar -Dversion=2.1.0 -Dpackaging=jar -DrepositoryId=pegasusRELEASE -Durl=dav:https://pegasus.peras.fiducia.de/upme/up/RELEASES -Dpackaging=jar -Dfile=gdata-calendar-2.0.jar
+rem mvn deploy:deploy-file -DgroupId=com.google.gdata.client -DartifactId=gdata-client -Dversion=1.0 -Dpackaging=jar -DrepositoryId=pegasusRELEASE -Durl=dav:https://pegasus.peras.fiducia.de/upme/up/RELEASES -Dpackaging=jar   -Dfile=gdata-client-1.0.jar
+mvn deploy:deploy-file -DgroupId=com.google.guava -DartifactId=guava -Dversion=11.0.2 -DrepositoryId=pegasusRELEASE -Durl=dav:https://pegasus.peras.fiducia.de/upme/up/RELEASES -Dpackaging=jar   -Dfile=guava-11.0.2.jar
