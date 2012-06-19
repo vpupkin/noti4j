@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.blky</groupId>
 	<artifactId>noti4j</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>noti4j</name>
 	<packaging>jar</packaging>
 	<properties>
 		<l.base>https://code.google.com/p/</l.base>
-		<scm.base>${l.base}/${pom.artifactId}/</scm.base>
+		<scm.base>${l.base}/</scm.base>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.uid>${pom.artifactId}</project.uid>
 	</properties>	
