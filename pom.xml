@@ -50,17 +50,12 @@
 			<comments>GNU General Public License</comments>
 		</license>
 	</licenses>
-	<scm>
-		<connection>
-			scm:svn:https://skypeproxy.googlecode.com/svn/tags/noti4j-0.0.1
-		</connection>
-		<developerConnection>
-			scm:svn:https://skypeproxy.googlecode.com/svn/tags/noti4j-0.0.1
-		</developerConnection>
-		<url>
-			scm:svn:https://skypeproxy.googlecode.com/svn/tags/noti4j-0.0.1
-		</url>
-	</scm>
+  <scm>
+    <connection>scm:hg:${scm.base}/${pom.artifactId}</connection>
+    <developerConnection>scm:hg:${scm.base}/${pom.artifactId}</developerConnection>
+    <url>${l.base}/JSPWiki/Wiki.jsp?page=${pom.artifactId}</url>
+  </scm>
+ 
 	<organization>
 		<name>WWWGoogleCode</name>
 		<url>
