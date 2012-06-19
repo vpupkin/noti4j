@@ -3,3 +3,5 @@ syntax: regexp
 ^target$
 syntax: regexp
 ^pom\.xml\.releaseBackup$
+syntax: regexp
+^pom\.xml\.releaseBackup$
