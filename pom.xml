@@ -9,7 +9,8 @@
 	<name>noti4j</name>
 	<packaging>jar</packaging>
 	<properties>
-		<scm.base>${l.base}/hg/projects</scm.base>
+		<l.base>https://code.google.com/p/</l.base>
+		<scm.base>${l.base}/${pom.artifactId}/</scm.base>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.uid>${pom.artifactId}</project.uid>
 	</properties>	
